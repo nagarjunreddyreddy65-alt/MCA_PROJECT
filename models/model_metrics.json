@@ -1,0 +1,93 @@
+{
+    "project": "AI-Driven CI/CD Pipeline Optimization",
+    "author": "NAGARJUNREDDY (1DS25MC052)",
+    "institution": "Dayananda Sagar College of Engineering, Bangalore",
+    "champion_classification_model": "Random Forest",
+    "champion_regression_model": "Linear Regression",
+    "classification_benchmarks": {
+        "Logistic Regression": {
+            "accuracy": 0.5,
+            "precision": 0.3799,
+            "recall": 0.8465,
+            "f1_score": 0.5245,
+            "roc_auc": 0.6698,
+            "confusion_matrix": [
+                [
+                    157,
+                    315
+                ],
+                [
+                    35,
+                    193
+                ]
+            ],
+            "filename": "failure_classifier_lr.joblib"
+        },
+        "Decision Tree": {
+            "accuracy": 0.4757,
+            "precision": 0.3618,
+            "recall": 0.7982,
+            "f1_score": 0.4979,
+            "roc_auc": 0.618,
+            "confusion_matrix": [
+                [
+                    151,
+                    321
+                ],
+                [
+                    46,
+                    182
+                ]
+            ],
+            "filename": "failure_classifier_dt.joblib"
+        },
+        "Random Forest": {
+            "accuracy": 0.5629,
+            "precision": 0.4062,
+            "recall": 0.7412,
+            "f1_score": 0.5248,
+            "roc_auc": 0.6533,
+            "confusion_matrix": [
+                [
+                    225,
+                    247
+                ],
+                [
+                    59,
+                    169
+                ]
+            ],
+            "filename": "failure_classifier_rf.joblib"
+        }
+    },
+    "regression_benchmarks": {
+        "Baseline (Mean)": {
+            "mae": 26.5553,
+            "mse": 839.4873,
+            "rmse": 28.9739,
+            "r2_score": -5.1993,
+            "filename": "none"
+        },
+        "Linear Regression": {
+            "mae": 5.3144,
+            "mse": 51.6389,
+            "rmse": 7.186,
+            "r2_score": 0.6187,
+            "filename": "runtime_regressor_lr.joblib"
+        },
+        "Random Forest Regressor": {
+            "mae": 5.6054,
+            "mse": 55.8976,
+            "rmse": 7.4765,
+            "r2_score": 0.5872,
+            "filename": "runtime_regressor_rf.joblib"
+        },
+        "Gradient Boosting Regressor": {
+            "mae": 5.7558,
+            "mse": 57.2658,
+            "rmse": 7.5674,
+            "r2_score": 0.5771,
+            "filename": "runtime_regressor_gb.joblib"
+        }
+    }
+}
