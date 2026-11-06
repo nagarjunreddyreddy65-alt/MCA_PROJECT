@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven CI/CD Pipeline Optimization | MCA Major Project</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Chart.js CDN with error resilience -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Top Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-icon">AI</div>
+            <div class="brand-text">
+                <h1>AI-Driven CI/CD Pipeline Optimization</h1>
+                <p>NAGARJUNREDDY (1DS25MC052) • Guide: Prof. Mahendra Kumar B • Dept of MCA, DSCE Bangalore</p>
+            </div>
+        </div>
+        <div class="header-badges">
+            <span id="health-badge" class="badge badge-warning">● Connecting to API...</span>
+            <span class="badge badge-primary">TravisTorrent Grounded</span>
+            <span class="badge badge-success">Python 3.14 & Scikit-Learn</span>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <button class="tab-btn active" data-tab="overview">📊 Overview & Telemetry</button>
+        <button class="tab-btn" data-tab="predictor">🧠 AI Risk & Runtime Prediction</button>
+        <button class="tab-btn" data-tab="ast">🌲 AST Code Dependency</button>
+        <button class="tab-btn" data-tab="decision">🛡️ Safety Decision Engine</button>
+        <button class="tab-btn" data-tab="runner">⚡ Live Pipeline Runner</button>
+        <button class="tab-btn" data-tab="models">📈 ML Model Benchmarks</button>
+        <button class="tab-btn" data-tab="experiments">🔬 Empirical Experiments</button>
+    </nav>
+
+    <main>
+        <!-- TAB 1: OVERVIEW & TELEMETRY -->
+        <section id="overview" class="tab-content active">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Total CI/CD Builds</div>
+                    <div class="kpi-value" id="kpi-total-builds">0</div>
+                    <div class="kpi-trend trend-positive">SQLite Telemetry Store</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Build Success Rate</div>
+                    <div class="kpi-value" id="kpi-success-rate">0%</div>
+                    <div class="kpi-trend trend-positive">Verified Reliability</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Average Runtime Savings</div>
+                    <div class="kpi-value" id="kpi-runtime-savings" style="color: #34d399;">0%</div>
+                    <div class="kpi-trend trend-positive">Baseline vs. AI-Optimized</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Test Churn Reduction</div>
+                    <div class="kpi-value" id="kpi-test-reduction" style="color: #60a5fa;">0%</div>
+                    <div class="kpi-trend trend-positive">Unnecessary Tests Skipped</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Average Runtime (s)</div>
+                    <div class="kpi-value" id="kpi-avg-runtime">0.0s</div>
+                    <div class="kpi-trend trend-positive">Pipeline Duration</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Average CPU Usage</div>
+                    <div class="kpi-value" id="kpi-avg-cpu">0.0%</div>
+                    <div class="kpi-trend trend-positive">Hardware Telemetry</div>
+                </div>
+            </div>
+
+            <!-- Runtime Trend Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Real-Time Pipeline Execution Runtime vs. AI Prediction</div>
+                        <div class="card-subtitle">Continuous comparative telemetry recorded into SQLite database</div>
+                    </div>
+                </div>
+                <div style="height: 280px;">
+                    <canvas id="overviewRuntimeChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Build Telemetry Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Recent Pipeline Build Executions</div>
+                    <div class="card-subtitle">Actual live execution records from SQLite</div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Build ID</th>
+                                <th>Mode</th>
+                                <th>Strategy</th>
+                                <th>Status</th>
+                                <th>Failure Risk</th>
+                                <th>Duration</th>
+                                <th>Passed/Total</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: AI RISK & RUNTIME PREDICTOR -->
+        <section id="predictor" class="tab-content">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Interactive AI Inference Engine</div>
+                        <div class="card-subtitle">Trained on TravisTorrent historical CI/CD build characteristics</div>
+                    </div>
+                    <form id="prediction-form">
+                        <div class="form-group">
+                            <label class="form-label">Target Modified File</label>
+                            <select id="p-file-name" class="form-input">
+                                <option value="sample_app/auth.py">sample_app/auth.py (Auth Service)</option>
+                                <option value="sample_app/payment.py">sample_app/payment.py (Payment Module)</option>
+                                <option value="sample_app/inventory.py">sample_app/inventory.py (Inventory Manager)</option>
+                                <option value="sample_app/notifications.py">sample_app/notifications.py (Notifier)</option>
+                                <option value="sample_app/utils.py">sample_app/utils.py (Core Shared Utility)</option>
+                                <option value="requirements.txt">requirements.txt (Configuration / Fallback)</option>
+                            </select>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Files Changed</label>
+                                <input type="number" id="p-files" class="form-input" value="1" min="1" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Lines Added</label>
+                                <input type="number" id="p-added" class="form-input" value="15" min="0">
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Lines Deleted</label>
+                                <input type="number" id="p-deleted" class="form-input" value="3" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Total Test Count</label>
+                                <input type="number" id="p-tests" class="form-input" value="30" min="1">
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Previous Build Runtime (s)</label>
+                                <input type="number" step="0.1" id="p-prev-runtime" class="form-input" value="45.0">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Previous Build Failed?</label>
+                                <select id="p-prev-fail" class="form-input">
+                                    <option value="0">0 - Prior Build Succeeded</option>
+                                    <option value="1">1 - Prior Build Failed (Risk Factor)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Runner CPU Usage (%)</label>
+                                <input type="number" step="0.1" id="p-cpu" class="form-input" value="35.0" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Runner Memory (MB)</label>
+                                <input type="number" step="0.1" id="p-mem" class="form-input" value="250.0" min="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                            ⚡ Run AI Inference & Safety Evaluation
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Prediction Results Display -->
+                <div class="card" id="prediction-result-box" style="display: none;">
+                    <div class="card-header">
+                        <div class="card-title">Prediction & Decision Output</div>
+                        <span id="res-strategy" class="badge badge-success">TARGETED</span>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 1rem;">
+                        <div class="kpi-card" style="padding: 0.75rem;">
+                            <div class="kpi-title">Failure Risk</div>
+                            <div class="kpi-value" id="res-prob" style="font-size: 1.4rem;">0%</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 0.75rem;">
+                            <div class="kpi-title">Confidence</div>
+                            <div class="kpi-value" id="res-conf" style="font-size: 1.4rem;">0%</div>
+                        </div>
+                        <div class="kpi-card" style="padding: 0.75rem;">
+                            <div class="kpi-title">Predicted Runtime</div>
+                            <div class="kpi-value" id="res-pred-time" style="font-size: 1.4rem;">0s</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Safety Decision Explanation:</label>
+                        <p id="res-explanation" style="font-size: 0.875rem; color: #cbd5e1; background: var(--bg-primary); padding: 0.75rem; border-radius: 6px;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Selected Test Suite:</label>
+                        <ul id="res-tests-list" style="margin-left: 1.5rem; font-size: 0.8125rem; color: #38bdf8;"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: AST CODE ANALYSIS -->
+        <section id="ast" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Abstract Syntax Tree (AST) Static Source Analysis</div>
+                        <div class="card-subtitle">Bidirectional mapping from Python AST definitions to Pytest test cases</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadASTOverview()">🔄 Re-analyze Codebase</button>
+                </div>
+                <div id="ast-tree-box" class="terminal-box" style="max-height: 400px; font-family: var(--font); color: var(--text-primary);">
+                    Analyzing Python Abstract Syntax Trees...
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: SAFETY DECISION ENGINE -->
+        <section id="decision" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Safety-Aware Decision Engine Rules & Policy</div>
+                        <div class="card-subtitle">Strict compliance with MCA Project Synopsis Section 4.1 Stage 9</div>
+                    </div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-card" style="border-left: 4px solid var(--danger);">
+                        <div class="kpi-title">Failure Risk Threshold</div>
+                        <div class="kpi-value">≥ 70.0%</div>
+                        <div class="kpi-trend trend-warning">Forces FULL TEST SUITE</div>
+                    </div>
+                    <div class="kpi-card" style="border-left: 4px solid var(--warning);">
+                        <div class="kpi-title">Model Confidence Threshold</div>
+                        <div class="kpi-value">&lt; 65.0%</div>
+                        <div class="kpi-trend trend-warning">Forces FULL TEST SUITE</div>
+                    </div>
+                    <div class="kpi-card" style="border-left: 4px solid var(--primary);">
+                        <div class="kpi-title">AST Dependency Fallback</div>
+                        <div class="kpi-value">Active</div>
+                        <div class="kpi-trend trend-positive">Unknown file / Parse Error</div>
+                    </div>
+                </div>
+                <div style="background: var(--bg-primary); padding: 1.25rem; border-radius: 8px; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Safety Engine Philosophy: Fail-Safe, Not Fail-Open</h4>
+                    <p>• <strong>Risk Protection:</strong> If the Random Forest failure classifier predicts an upcoming pipeline failure risk $\ge 70\%$, test reduction is strictly prohibited.</p>
+                    <p>• <strong>Uncertainty Mitigation:</strong> If the model's confidence is $< 65\%$, optimization is bypassed, guaranteeing that low certainty never leads to false test omission.</p>
+                    <p>• <strong>Zero Silent Drops:</strong> If any modified file is non-Python (YAML, Docker, requirements), has syntax errors, or lacks test mappings, the system automatically falls back to full regression testing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: LIVE PIPELINE RUNNER -->
+        <section id="runner" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Live Pipeline Execution & Resource Profiler</div>
+                        <div class="card-subtitle">Triggers real test executions with live CPU and Memory telemetry</div>
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Pipeline Mode</label>
+                        <select id="runner-mode" class="form-input">
+                            <option value="AI_OPTIMIZED">AI-Optimized Pipeline (Change-Aware & Safe)</option>
+                            <option value="BASELINE">Conventional Baseline Pipeline (Full Suite)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Simulate Change In File</label>
+                        <select id="runner-file" class="form-input">
+                            <option value="sample_app/inventory.py">sample_app/inventory.py (Isolated Module)</option>
+                            <option value="sample_app/auth.py">sample_app/auth.py (Auth Module)</option>
+                            <option value="sample_app/utils.py">sample_app/utils.py (Core Utility - Wide Impact)</option>
+                            <option value="Dockerfile">Dockerfile (Infrastructure - Triggers Full Suite)</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="run-pipeline-btn" class="btn btn-primary" style="margin-bottom: 1rem;">
+                    🚀 Run Pipeline
+                </button>
+                <div class="form-group">
+                    <label class="form-label">Real-Time Execution Console:</label>
+                    <div id="runner-console" class="terminal-box">
+Ready. Select mode and target file, then click 'Run Pipeline'.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: ML MODEL BENCHMARKS -->
+        <section id="models" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Machine Learning Classification Benchmark (Failure Risk)</div>
+                        <div class="card-subtitle">Comparison of Logistic Regression, Decision Tree, and Random Forest</div>
+                    </div>
+                </div>
+                <div style="height: 300px; margin-bottom: 1.5rem;">
+                    <canvas id="modelClfChart"></canvas>
+                </div>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary);">
+                    * Champion model selected based on Failure Recall and F1-score to prevent false negatives in CI/CD pipeline automation.
+                </p>
+            </div>
+        </section>
+
+        <!-- TAB 7: EMPIRICAL EXPERIMENTS -->
+        <section id="experiments" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Controlled Experimental Evaluation: Baseline vs. AI-Optimized</div>
+                        <div class="card-subtitle">Empirical validation across 10 controlled scenarios including defect injection</div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Scenario Name</th>
+                                <th>Baseline Time</th>
+                                <th>Optimized Time</th>
+                                <th>Runtime Saved</th>
+                                <th>Test Count</th>
+                                <th>Test Reduction</th>
+                                <th>Defect Detection</th>
+                            </tr>
+                        </thead>
+                        <tbody id="experiments-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
