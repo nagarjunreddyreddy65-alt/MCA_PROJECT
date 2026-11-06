@@ -1,0 +1,65 @@
+name: AI-Optimized Intelligent CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ai-optimized-pipeline:
+    runs-on: ubuntu-latest
+    name: Change-Aware & Safety-Gated Execution
+
+    steps:
+      - name: Checkout Code Repository with Full History
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python Runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Identify Git Code Churn & Modified Files
+        id: git_analysis
+        run: |
+          python -c "
+          from src.analyzer.git_diff import git_analyzer
+          changes = git_analyzer.get_changed_files('HEAD~1')
+          print('Changed files:', changes['all_changed'])
+          "
+
+      - name: Run AI Risk Prediction, AST Selection & Safety Gated Execution
+        run: |
+          python -c "
+          from src.runner.pipeline_runner import pipeline_runner
+          res = pipeline_runner.run_optimized_pipeline(commit_hash='${{ github.sha }}', branch='${{ github.ref_name }}')
+          print('========================================')
+          print('AI PIPELINE EXECUTION SUMMARY')
+          print('========================================')
+          print('Execution Strategy  :', res['execution_strategy'])
+          print('Safety Triggered    :', res['safety_triggered'])
+          print('Failure Probability :', f\"{res['failure_probability']*100:.1f}%\")
+          print('Model Confidence    :', f\"{res['model_confidence']*100:.1f}%\")
+          print('Predicted Runtime   :', f\"{res['predicted_runtime']}s\")
+          print('Actual Runtime      :', f\"{res['actual_runtime']}s\")
+          print('Test Reduction      :', f\"{res['test_reduction_percentage']}%\")
+          print('Executed Tests      :', res['executed_tests'])
+          print('Status              :', res['status'])
+          print('Explanation         :', res['decision_explanation'])
+          "
+
+      - name: Upload AI Telemetry Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-telemetry-db
+          path: cicd_telemetry.db
+          retention-days: 7

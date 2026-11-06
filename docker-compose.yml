@@ -1,0 +1,21 @@
+services:
+  ai-cicd-optimizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_cicd_pipeline_optimization
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+    volumes:
+      # Persistent volume for SQLite telemetry across restarts
+      - ./cicd_telemetry.db:/app/cicd_telemetry.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

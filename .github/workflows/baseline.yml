@@ -1,0 +1,42 @@
+name: Conventional Baseline CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  baseline-build-and-test:
+    runs-on: ubuntu-latest
+    name: Full Test Suite Execution
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python Runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify Environment & Health
+        run: |
+          python -c "import sklearn, pandas, numpy, fastapi; print('Environment dependencies verified successfully.')"
+
+      - name: Execute Conventional Baseline (Full Suite)
+        run: |
+          python -c "from src.runner.pipeline_runner import pipeline_runner; res = pipeline_runner.run_baseline_pipeline(commit_hash='${{ github.sha }}', branch='${{ github.ref_name }}'); print('Pipeline Result:', res['status'], 'Runtime:', res['actual_runtime'], 's')"
+
+      - name: Upload Telemetry Database Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-telemetry-db
+          path: cicd_telemetry.db
+          retention-days: 7
