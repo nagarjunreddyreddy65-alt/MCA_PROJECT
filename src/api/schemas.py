@@ -37,6 +37,7 @@ class ASTAnalysisRequest(BaseModel):
 
 
 class TestSelectionRequest(BaseModel):
+    __test__ = False
     changed_files: List[str] = Field(default_factory=lambda: ["sample_app/auth.py"])
 
 
