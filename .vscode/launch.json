@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🚀 Launch FastAPI & Dashboard (Port 8000)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "src.api.main:app",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000",
+                "--reload"
+            ],
+            "jinja": true,
+            "justMyCode": true,
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "🧪 Run All Pytest Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests",
+                "-v"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "🔬 Run Controlled Experiments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/experiments/run_experiments.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "🧠 Retrain All ML Models",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/ml/train_all.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "⚡ Run AI-Optimized Pipeline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/runner/pipeline_runner.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

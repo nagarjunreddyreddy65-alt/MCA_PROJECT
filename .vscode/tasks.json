@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Start FastAPI Server & Dashboard",
+            "type": "shell",
+            "command": "python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000 --reload",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "🧪 Run Pytest Test Suite",
+            "type": "shell",
+            "command": "python -m pytest tests -v",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "🔬 Run Empirical Experiments",
+            "type": "shell",
+            "command": "python experiments/run_experiments.py",
+            "problemMatcher": []
+        },
+        {
+            "label": "🐳 Docker Compose Build & Up",
+            "type": "shell",
+            "command": "docker compose up --build",
+            "problemMatcher": []
+        },
+        {
+            "label": "📊 Generate Report & Slide PDFs",
+            "type": "shell",
+            "command": "python docs/generate_final_report_pdf.py; python docs/generate_presentation_pdf.py",
+            "problemMatcher": []
+        }
+    ]
+}
