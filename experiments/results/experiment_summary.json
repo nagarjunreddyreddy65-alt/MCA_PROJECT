@@ -1,0 +1,11 @@
+{
+    "total_scenarios_evaluated": 10,
+    "mean_baseline_runtime_sec": 1.76,
+    "mean_optimized_runtime_sec": 1.67,
+    "overall_runtime_savings_pct": 5.25,
+    "mean_baseline_tests": 27.0,
+    "mean_optimized_tests": 23.1,
+    "overall_test_reduction_pct": 14.44,
+    "defect_retention_rate_pct": 100.0,
+    "safety_fallback_activations": 7
+}
