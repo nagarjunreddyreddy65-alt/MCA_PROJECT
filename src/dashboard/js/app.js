@@ -34,6 +34,7 @@ function initTabs() {
             // Re-render charts on tab switch if needed
             if (tab.dataset.tab === "models") renderModelCharts();
             if (tab.dataset.tab === "experiments") loadExperimentBenchmarks();
+            if (tab.dataset.tab === "laptop") loadLaptopRepositories();
         });
     });
 }
@@ -44,6 +45,7 @@ async function loadAllDashboardData() {
     await loadBuildHistory();
     await loadASTOverview();
     await loadExperimentBenchmarks();
+    await loadLaptopRepositories();
 }
 
 async function checkHealth() {
@@ -376,5 +378,136 @@ async function loadExperimentBenchmarks() {
         });
     } catch (e) {
         console.error("Error loading experiments:", e);
+    }
+}
+
+async function loadLaptopRepositories() {
+    try {
+        const res = await fetch(`${API_BASE}/api/laptop/repositories`);
+        const repos = await res.json();
+        const grid = document.getElementById("laptop-repos-grid");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        repos.forEach(r => {
+            const card = document.createElement("div");
+            card.className = "kpi-card";
+            card.style.cursor = "pointer";
+            card.onclick = () => selectLaptopRepo(r.path);
+
+            const badgeStatus = r.exists
+                ? `<span class="badge badge-success">AVAILABLE</span>`
+                : `<span class="badge badge-warning">NOT FOUND</span>`;
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div class="kpi-title" style="color: #38bdf8; font-size: 0.95rem;">${r.name}</div>
+                    ${badgeStatus}
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">${r.description}</p>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+                    <span>${r.python_files} Python Files</span>
+                    <span>${r.test_files} Tests</span>
+                </div>
+                <div style="margin-top: 0.5rem; font-size: 0.7rem; color: var(--text-secondary); word-break: break-all;">
+                    <code>${r.path}</code>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    } catch (e) {
+        console.error("Error loading laptop repositories:", e);
+    }
+}
+
+function selectLaptopRepo(path) {
+    const input = document.getElementById("laptop-target-path");
+    if (input) input.value = path;
+    const consoleBox = document.getElementById("laptop-output-console");
+    if (consoleBox) {
+        consoleBox.innerText = `Selected Target Application: ${path}\nClick '1. Analyze AST Structure' to map dependencies.`;
+    }
+}
+
+async function analyzeSelectedLaptopRepo() {
+    const path = document.getElementById("laptop-target-path").value;
+    const consoleBox = document.getElementById("laptop-output-console");
+    consoleBox.innerText = `[*] Analyzing AST dependencies for ${path}...\n`;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/laptop/analyze`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: path }),
+        });
+        const data = await res.json();
+        consoleBox.innerText += `[+] Analysis Successful: ${data.repository_name}\n`;
+        consoleBox.innerText += `    Total Python Files : ${data.total_python_files}\n`;
+        consoleBox.innerText += `    Source Modules     : ${data.source_files_count}\n`;
+        consoleBox.innerText += `    Test Files         : ${data.test_files_count}\n`;
+        consoleBox.innerText += `    Mapped Modules     : ${data.mapped_modules_count}\n\n`;
+        consoleBox.innerText += `Direct and Transitive Module-to-Test Dependencies:\n`;
+        for (const [mod, tests] of Object.entries(data.module_to_tests)) {
+            consoleBox.innerText += `  • ${mod} ➔ [${tests.join(", ")}]\n`;
+        }
+    } catch (e) {
+        consoleBox.innerText += `[!] Analysis Error: ${e.message}`;
+    }
+}
+
+async function optimizeSelectedLaptopRepo() {
+    const path = document.getElementById("laptop-target-path").value;
+    const changeInput = document.getElementById("laptop-target-change").value;
+    const consoleBox = document.getElementById("laptop-output-console");
+    consoleBox.innerText = `[*] Running AI Test Optimization for ${path}...\n`;
+
+    const payload = { path: path };
+    if (changeInput.trim()) {
+        payload.changed_files = [changeInput.trim()];
+    }
+
+    try {
+        const res = await fetch(`${API_BASE}/api/laptop/optimize`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        consoleBox.innerText += `[+] AI Optimization Decision for ${data.repository_name}:\n`;
+        consoleBox.innerText += `    Execution Strategy : ${data.execution_strategy}\n`;
+        consoleBox.innerText += `    Safety Triggered   : ${data.safety_triggered}\n`;
+        if (data.fallback_reason) {
+            consoleBox.innerText += `    Fallback Reason    : ${data.fallback_reason}\n`;
+        }
+        consoleBox.innerText += `    Predicted Failure  : ${(data.failure_probability * 100).toFixed(1)}%\n`;
+        consoleBox.innerText += `    Model Confidence   : ${(data.model_confidence * 100).toFixed(1)}%\n`;
+        consoleBox.innerText += `    Total Tests        : ${data.total_tests_available}\n`;
+        consoleBox.innerText += `    Selected Tests     : ${data.selected_tests_count}\n`;
+        consoleBox.innerText += `    Test Reduction %   : ${data.test_reduction_percentage}%\n\n`;
+        consoleBox.innerText += `Selected Tests to Run:\n  • ${data.selected_tests.join("\n  • ")}\n`;
+    } catch (e) {
+        consoleBox.innerText += `[!] Optimization Error: ${e.message}`;
+    }
+}
+
+async function installAICICDToLaptopRepo() {
+    const path = document.getElementById("laptop-target-path").value;
+    const consoleBox = document.getElementById("laptop-output-console");
+    consoleBox.innerText = `[*] Installing AI CI/CD Pipeline into ${path}...\n`;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/laptop/install`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: path }),
+        });
+        const data = await res.json();
+        consoleBox.innerText += `[SUCCESS] AI CI/CD Pipeline Installed into ${data.repository}!\n`;
+        consoleBox.innerText += `  • Workflow File : ${data.installed_workflow}\n`;
+        consoleBox.innerText += `  • Local Runner  : ${data.installed_runner}\n`;
+        consoleBox.innerText += `  • Integration Doc: ${data.installed_docs}\n\n`;
+        consoleBox.innerText += `You can now run: python ai_cicd_runner.py inside ${data.repository} to run AI-optimized testing!`;
+    } catch (e) {
+        consoleBox.innerText += `[!] Installation Error: ${e.message}`;
     }
 }

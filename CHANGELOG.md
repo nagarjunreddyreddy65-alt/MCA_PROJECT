@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.1.0] - 2026-11-10
+
+### Host Laptop Multi-Application Integration
+- **Multi-Repository Optimization Engine (`src/integration/multi_repo_optimizer.py`):**
+  - Scans and detects external applications across the host laptop (`C:\Users\nagar\DEVOPS_NAGARJUN`, `C:\DEVOPS_BENCHMARK_REPOS\requests`, `C:\DEVOPS_BENCHMARK_REPOS\click`, `C:\Users\nagar\ci-experiment`).
+  - Implements cross-repository AST static code dependency mapping and test extraction.
+  - Generates change-aware test subsets for external codebases with up to 90.9% test churn reduction.
+  - Provides workflow installation capability: injects `.github/workflows/ai-optimized-cicd.yml` and `ai_cicd_runner.py` directly into external repositories.
+- **REST API Extensions (`src/api/main.py`):**
+  - Added `/api/laptop/repositories`, `/api/laptop/analyze`, `/api/laptop/optimize`, and `/api/laptop/install`.
+- **Interactive Dashboard Extension (`src/dashboard/`):**
+  - Added Tab 8: **"💻 Laptop Applications Integration"** with live application grid and controller.
+- **Verification & Testing (`scripts/test_laptop_integration.py`):**
+  - Verified end-to-end integration across all 4 host laptop repositories.
+
 ## [1.0.0] - 2026-11-06
 
 ### Complete Major Academic Project Release

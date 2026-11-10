@@ -34,6 +34,7 @@ from src.selector.test_selector import test_selector
 from src.decision.safety_engine import safety_engine
 from src.database.db_manager import db_manager
 from src.runner.pipeline_runner import pipeline_runner
+from src.integration.multi_repo_optimizer import multi_repo_optimizer
 
 app = FastAPI(
     title="AI-Driven CI/CD Pipeline Optimization API",
@@ -198,6 +199,49 @@ def get_model_metrics():
 def get_experiment_comparison():
     """Returns comparative evaluation records (Baseline vs AI-Optimized)."""
     return db_manager.get_experiments()
+
+
+@app.get("/api/laptop/repositories")
+def list_laptop_repositories():
+    """Discovers and lists accessible applications and repositories on the laptop."""
+    return multi_repo_optimizer.discover_laptop_repositories()
+
+
+@app.post("/api/laptop/analyze")
+def analyze_laptop_repository(payload: Dict[str, Any]):
+    """Runs AST analysis and symbol dependency mapping on any laptop repository."""
+    repo_path = payload.get("path")
+    if not repo_path:
+        raise HTTPException(status_code=400, detail="Missing required 'path' field.")
+    try:
+        return multi_repo_optimizer.analyze_external_repo(repo_path)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/laptop/optimize")
+def optimize_laptop_repository(payload: Dict[str, Any]):
+    """Applies AI-driven change detection, ML risk prediction, and test selection to any laptop repo."""
+    repo_path = payload.get("path")
+    changed_files = payload.get("changed_files")
+    if not repo_path:
+        raise HTTPException(status_code=400, detail="Missing required 'path' field.")
+    try:
+        return multi_repo_optimizer.optimize_external_repo_change(repo_path, changed_files=changed_files)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/laptop/install")
+def install_ai_cicd_to_laptop_repo(payload: Dict[str, Any]):
+    """Installs the AI CI/CD workflow and runner script into any laptop repository."""
+    repo_path = payload.get("path")
+    if not repo_path:
+        raise HTTPException(status_code=400, detail="Missing required 'path' field.")
+    try:
+        return multi_repo_optimizer.install_ai_cicd_to_repo(repo_path)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 if __name__ == "__main__":
